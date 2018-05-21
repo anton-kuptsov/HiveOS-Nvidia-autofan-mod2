@@ -9,6 +9,7 @@ export DISPLAY=:0
 DELAY=60
 
 MAX_TEMP=65
+MIN_SPEED=20
 
 CARDS_NUM=`nvidia-smi -L | wc -l`
 echo "Found ${CARDS_NUM} GPU(s), Delay ${DELAY}s"
@@ -26,6 +27,10 @@ while true
                 if [ $DIFF -le -2 ]
                     then
                         FAN_SPEED=$(( $GPU_FUN - 2))
+			if [ $FAN_SPEED -le $MIN_SPEED ] 
+			then
+		        	FAN_SPEED=$MIN_SPEED 
+			fi
 						nvidia-settings -a [gpu:$i]/GPUFanControlState=1 > /dev/null
 						nvidia-settings -a [fan:$i]/GPUTargetFanSpeed=$FAN_SPEED > /dev/null
 						echo "GPU${i} SET ${FAN_SPEED}%"
