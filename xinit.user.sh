@@ -1,3 +1,3 @@
 #!/bin/bash
 
-screen -dmS autofan /home/user/autofan.sh
+screen -dmS autofan2 /home/user/autofan2.sh
